@@ -23,7 +23,7 @@
   </div>
 
   <!----- (opcional) input pra você digitar a leitura em kana ----->
-  <input  id="reading-input"  placeholder="読み仮名">
+  <input type="text" id="reading-input" placeholder="読み仮名" autofocus>
   <button id="check-button">Check</button>
   <div    id="result"></div>
 
@@ -84,13 +84,16 @@
 
     document.getElementById('check-button').addEventListener('click', checkReading);
 
-    // Focus automático no input ao carregar
-    document.getElementById('reading-input').addEventListener('focus', function() {
-        window.scrollTo(0, this.getBoundingClientRect().top + window.scrollY);
-    });
-    window.addEventListener('load', function() {
-        document.getElementById('reading-input').focus();
-    });
+    // Ajuste de foco para navegadores que perdem o teclado no Android
+    var readingInput = document.getElementById('reading-input');
+    if (readingInput) {
+        readingInput.addEventListener('focus', function() {
+            window.scrollTo(0, this.getBoundingClientRect().top + window.scrollY);
+        });
+        window.addEventListener('load', function() {
+            setTimeout(function() { readingInput.focus(); }, 0);
+        });
+    }
 </script>
 <!--###MIGAKU JAPANESE SUPPORT JS STARTS###-->
 <script>

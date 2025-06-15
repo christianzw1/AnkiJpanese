@@ -101,10 +101,16 @@
 
     document.getElementById('check-button').addEventListener('click', checkReading);
 
-    // Focus automático no input ao carregar
-    document.getElementById('reading-input').addEventListener('focus', function() {
-        window.scrollTo(0, this.getBoundingClientRect().top + window.scrollY);
-    });
+    // Ajuste de foco para navegadores que perdem o teclado no Android
+    var readingInput = document.getElementById('reading-input');
+    if (readingInput) {
+        readingInput.addEventListener('focus', function() {
+            window.scrollTo(0, this.getBoundingClientRect().top + window.scrollY);
+        });
+        window.addEventListener('load', function() {
+            setTimeout(function() { readingInput.focus(); }, 0);
+        });
+    }
 </script>
 <!--###MIGAKU JAPANESE SUPPORT JS STARTS###-->
 <script>
